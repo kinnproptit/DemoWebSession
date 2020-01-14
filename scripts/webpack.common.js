@@ -2,7 +2,7 @@ const path = require('path')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const WebpackBar = require('webpackbar')
-const StylelintPlugin = require('stylelint-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 module.exports = {
   entry: {
@@ -10,37 +10,28 @@ module.exports = {
   },
   output: {
     filename: '[name].[hash].bundle.js',
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(process.cwd(), 'dist'),
     publicPath: '/'
+  },
+  resolve: {
+    alias: {
+      core: path.resolve(process.cwd(), 'src', 'packages', 'core'),
+      ui: path.resolve(process.cwd(), 'src', 'packages', 'ui')
+    },
+    mainFields: ['browser', 'main', 'module'],
+    extensions: ['.js', '.json', '.jsx']
   },
   module: {
     rules: [
-      {
-        enforce: 'pre',
-        test: /\.(js|jsx)$/,
-        exclude: /node_modules/,
-        loader: 'eslint-loader',
-        options: {
-          failOnError: true,
-          emitError: true
-        }
-      },
-      {
-        test: /\.(js|jsx)$/,
-        exclude: /(node_modules|bower_components)/,
-        use: ['babel-loader']
-      },
-      {
-        test: /\.css$/i,
-        use: ['style-loader', 'css-loader']
-      },
-      {
-        test: /\.html$/,
-        use: ['html-loader']
-      },
+      { test: /\.(js)$/, use: 'babel-loader' },
+      { test: /\.css$/, use: ['style-loader', 'css-loader'] },
       {
         test: /\.svg$/,
-        loader: 'svg-inline-loader'
+        use: [
+          {
+            loader: 'raw-loader'
+          }
+        ]
       },
       {
         exclude: [
@@ -73,6 +64,14 @@ module.exports = {
             }
           }
         ]
+      },
+      {
+        test: /\.(sa|sc)ss$/,
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
+      },
+      {
+        test: /\.html$/,
+        use: ['html-loader']
       }
     ]
   },
@@ -80,12 +79,8 @@ module.exports = {
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       title: 'Dashboard',
-      template: path.resolve(__dirname, 'src', 'index.html')
+      template: path.resolve(process.cwd(), 'public', 'index.html')
     }),
-    new WebpackBar(),
-    new StylelintPlugin({ emitError: true, failOnError: true })
-  ],
-  resolve: {
-    extensions: ['.js', '.jsx']
-  }
+    new WebpackBar()
+  ]
 }
