@@ -16,13 +16,28 @@ module.exports = {
   resolve: {
     alias: {
       core: path.resolve(process.cwd(), 'src', 'packages', 'core'),
-      ui: path.resolve(process.cwd(), 'src', 'packages', 'ui')
+      ui: path.resolve(process.cwd(), 'src', 'packages', 'ui'),
+      service: path.resolve(process.cwd(), 'src', 'packages', 'service')
     },
     mainFields: ['browser', 'main', 'module'],
     extensions: ['.js', '.json', '.jsx']
   },
   module: {
     rules: [
+      {
+        test: /\.ts(x?)$/,
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: 'ts-loader'
+          }
+        ]
+      },
+      {
+        enforce: 'pre',
+        test: /\.js$/,
+        loader: 'source-map-loader'
+      },
       { test: /\.(js)$/, use: 'babel-loader' },
       { test: /\.css$/, use: ['style-loader', 'css-loader'] },
       {
