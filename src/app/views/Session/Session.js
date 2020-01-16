@@ -1,10 +1,12 @@
-import React from 'react'
-
+import React, { useContext } from 'react'
 import { ErrorBoundary } from 'ui'
-import { Dropdown } from 'react-dropdown'
-import { Page } from 'tabler-react'
 
-export const Session = ({ parts = [] }) => {
+import Dropdown from 'react-dropdown'
+import { Page } from 'tabler-react'
+import { PreloaderContext } from '../Preloader'
+
+export const Session = () => {
+  const { parts } = useContext(PreloaderContext)
   const onSelect = () => {
     console.log('hihi')
   }

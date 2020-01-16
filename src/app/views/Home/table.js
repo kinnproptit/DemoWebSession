@@ -1,17 +1,18 @@
 /* eslint-disable react/jsx-no-bind */
-import React from 'react'
+import React, { useContext } from 'react'
 
 import { Avatar, Icon, Table } from 'tabler-react'
+import { PreloaderContext } from '../Preloader'
 
 export const RenderTable = ({ history }) => {
-  const data = []
+  const { sessions } = useContext(PreloaderContext)
 
   const handleClick = ({ id }) => {
     history.push({ pathname: `/session/${id}` })
   }
 
   const showData = () => {
-    return data.map(({ id, name }) => (
+    return sessions.map(({ id, name }) => (
       <Table.Row>
         <Table.Col className='w-1'>
           <Avatar>{id}</Avatar>

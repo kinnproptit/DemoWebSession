@@ -1,7 +1,7 @@
 import { useState as defaultUseState } from 'react'
-import { update } from 'immutability-helper'
+import update from 'immutability-helper'
 
-const useState = (initialValue = {}) => {
+export const useState = (initialValue = {}) => {
   const [state, monkeyPatchSetState] = defaultUseState(initialValue)
 
   const setState = data => {
@@ -19,5 +19,3 @@ const useState = (initialValue = {}) => {
 
   return [state, setState]
 }
-
-export { useState }
