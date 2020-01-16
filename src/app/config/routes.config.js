@@ -20,6 +20,12 @@ export default [
     path: '/session/:id',
     component: 'Session',
     exact: true
+  },
+  {
+    label: 'MeetingPart',
+    path: '/part/:id',
+    component: 'Part',
+    exact: true
   }
   // {
   //   label: 'RedirectSession',

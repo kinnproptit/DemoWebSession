@@ -3,38 +3,9 @@ import React from 'react'
 
 import { Avatar, Icon, Table } from 'tabler-react'
 
-const data = [
-  {
-    id: 1,
-    url: 'http://db.eachclass.net:8000/sessions/1/',
-    name: 'Kỳ họp số 1 năm 2020',
-    start_date: null,
-    end_date: null
-  },
-  {
-    id: 2,
-    url: 'http://db.eachclass.net:8000/sessions/2/',
-    name: 'Kỳ họp số 2 năm 2020',
-    start_date: null,
-    end_date: null
-  },
-  {
-    id: 4,
-    url: 'http://db.eachclass.net:8000/sessions/4/',
-    name: 'Kiểm tra tạo kỳ họp qua app 1',
-    start_date: null,
-    end_date: null
-  },
-  {
-    id: 5,
-    url: 'http://db.eachclass.net:8000/sessions/5/',
-    name: 'Kiểm tra tạo kỳ họp qua app 2',
-    start_date: null,
-    end_date: null
-  }
-]
-
 export const RenderTable = ({ history }) => {
+  const data = []
+
   const handleClick = ({ id }) => {
     history.push({ pathname: `/session/${id}` })
   }

@@ -1,3 +1,6 @@
+// import axios from 'axios'
+// import { createAction } from 'redux-actions'
+
 import { LOADING } from '../action-types'
 
 export const startLoading = () => dispatch =>
