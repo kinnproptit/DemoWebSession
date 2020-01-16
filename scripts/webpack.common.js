@@ -1,12 +1,16 @@
 const path = require('path')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 module.exports = {
-  entry: ['babel-polyfill', './src/index.js'],
+  entry: {
+    app: ['babel-polyfill', './src/index.js']
+  },
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: 'index_bundle.js'
+    path: path.resolve(process.cwd(), 'dist'),
+    publicPath: '/',
+    filename: '[name].[hash].bundle.js'
   },
   module: {
     rules: [
@@ -50,10 +54,14 @@ module.exports = {
   resolve: {
     alias: {
       ui: path.resolve(process.cwd(), 'src', 'packages', 'ui'),
-      core: path.resolve(process.cwd(), 'src', 'packages', 'core')
-    }
+      core: path.resolve(process.cwd(), 'src', 'packages', 'core'),
+      service: path.resolve(process.cwd(), 'src', 'packages', 'service')
+    },
+    mainFields: ['browser', 'main', 'module'],
+    extensions: ['.js', '.json', '.jsx']
   },
   plugins: [
+    new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       template: path.resolve(process.cwd(), 'public', 'index.html')
     }),
@@ -67,7 +75,7 @@ module.exports = {
     contentBase: './public',
     overlay: true,
     hot: false,
-    port: 3000,
+    port: 8123,
     quiet: true,
     host: 'localhost',
     disableHostCheck: true,

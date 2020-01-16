@@ -12,6 +12,8 @@ import { NavLink, withRouter } from 'react-router-dom'
 
 import { Site, RouterContextProvider, Grid, List } from 'tabler-react'
 
+import Logo from '../../assets/logo.svg'
+
 const navBarItems = [
   {
     value: 'Home',
@@ -57,7 +59,7 @@ export const DefaultNavbar = ({ children }) => {
       headerProps={{
         href: '/',
         alt: 'Logo',
-        imageURL: require('../../assets/circuit.svg')
+        imageURL: 'logo.png'
         // navItems: (
         //   <Nav.Item type='div' className='d-none d-md-flex'>
         //     <Button
@@ -77,16 +79,7 @@ export const DefaultNavbar = ({ children }) => {
         copyright: (
           <React.Fragment>
             Copyright © 2020
-            <a href='.'> Bocbang</a>. Theme by
-            <a
-              href='https://codecalm.net'
-              target='_blank'
-              rel='noopener noreferrer'
-            >
-              {' '}
-              codecalm.net
-            </a>{' '}
-            All rights reserved.
+            <a href='.'> Bocbang</a>.
           </React.Fragment>
         ),
         nav: (

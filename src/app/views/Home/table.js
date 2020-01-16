@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-no-bind */
 import React, { useContext } from 'react'
-
+import styled from 'styled-components'
 import { Avatar, Icon, Table } from 'tabler-react'
 import { PreloaderContext } from '../Preloader'
 
@@ -12,20 +12,28 @@ export const RenderTable = ({ history }) => {
   }
 
   const showData = () => {
-    return sessions.map(({ id, name }) => (
-      <Table.Row>
+    return sessions.map(({ id, name, status = Math.random() }, index) => (
+      <Table.Row key={id}>
         <Table.Col className='w-1'>
-          <Avatar>{id}</Avatar>
+          <Avatar>{index + 1}</Avatar>
         </Table.Col>
         <Table.Col>
-          <b>{name}</b>
+          <CursorB onClick={() => handleClick({ id })}>{name}</CursorB>
         </Table.Col>
         <Table.Col></Table.Col>
         <Table.Col className='text-nowrap'>
-          <span className='status-icon bg-success' /> active
+          {status > 0.5 ? (
+            <div>
+              <span className='status-icon bg-success' /> <span>active</span>
+            </div>
+          ) : (
+            <div>
+              <span className='status-icon bg-danger' /> <span>inactive</span>
+            </div>
+          )}
         </Table.Col>
         <Table.Col className='w-1'>
-          <Icon link name='trash' onClick={() => handleClick({ id })} />
+          <Icon link name='chevron-right' onClick={() => handleClick({ id })} />
         </Table.Col>
       </Table.Row>
     ))
@@ -65,3 +73,7 @@ export const RenderTable = ({ history }) => {
     </Table>
   )
 }
+
+const CursorB = styled.b`
+  cursor: pointer;
+`
