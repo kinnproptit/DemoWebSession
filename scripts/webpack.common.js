@@ -1,42 +1,15 @@
 const path = require('path')
-const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const WebpackBar = require('webpackbar')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 module.exports = {
-  entry: {
-    app: ['babel-polyfill', './src/index.js']
-  },
+  entry: ['babel-polyfill', './src/index.js'],
   output: {
-    filename: '[name].[hash].bundle.js',
-    path: path.resolve(process.cwd(), 'dist'),
-    publicPath: '/'
-  },
-  resolve: {
-    alias: {
-      core: path.resolve(process.cwd(), 'src', 'packages', 'core'),
-      ui: path.resolve(process.cwd(), 'src', 'packages', 'ui'),
-      service: path.resolve(process.cwd(), 'src', 'packages', 'service')
-    },
-    mainFields: ['browser', 'main', 'module'],
-    extensions: ['.js', '.json', '.jsx']
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'index_bundle.js'
   },
   module: {
     rules: [
-      {
-        test: /\.ts(x?)$/,
-        exclude: /node_modules/,
-        use: [
-          {
-            loader: 'ts-loader'
-          }
-        ]
-      },
-      {
-        enforce: 'pre',
-        test: /\.js$/,
-        loader: 'source-map-loader'
-      },
       { test: /\.(js)$/, use: 'babel-loader' },
       { test: /\.css$/, use: ['style-loader', 'css-loader'] },
       {
@@ -68,29 +41,39 @@ module.exports = {
         ]
       },
       {
-        test: /\.(woff(2)?|ttf|eot|png|jpg|gif)(\?v=\d+\.\d+\.\d+)?$/,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              name: '[name].[ext]',
-              outputPath: 'fonts/'
-            }
-          }
-        ]
-      },
-      {
-        test: /\.html$/,
-        use: ['html-loader']
+        test: /\.(sa|sc)ss$/,
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
       }
     ]
   },
+  mode: 'development',
+  resolve: {
+    alias: {
+      ui: path.resolve(process.cwd(), 'src', 'packages', 'ui'),
+      core: path.resolve(process.cwd(), 'src', 'packages', 'core')
+    }
+  },
   plugins: [
-    new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
-      title: 'Dashboard',
       template: path.resolve(process.cwd(), 'public', 'index.html')
     }),
-    new WebpackBar()
-  ]
+    new MiniCssExtractPlugin({
+      filename: '../dist/style.min.css'
+    })
+  ],
+  devServer: {
+    compress: true,
+    clientLogLevel: 'none',
+    contentBase: './public',
+    overlay: true,
+    hot: false,
+    port: 3000,
+    quiet: true,
+    host: 'localhost',
+    disableHostCheck: true,
+    historyApiFallback: true,
+    watchOptions: {
+      ignored: /node_modules/
+    }
+  }
 }
