@@ -6,6 +6,8 @@ import {
   // Redirect
 } from 'react-router-dom'
 
+import './App.css'
+
 import { LoadingIndicator } from 'ui'
 
 import loadable from '@loadable/component'

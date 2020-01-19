@@ -5,7 +5,6 @@ import { Page } from 'tabler-react'
 import { PartContainer } from '../Part'
 
 export const Session = ({ parts, sentences, partId, setState }) => {
-  console.log(partId)
   const onSelect = option => {
     setState({ partId: option.value })
   }

@@ -1,7 +1,10 @@
+/* eslint-disable camelcase */
 /* eslint-disable react/jsx-no-bind */
 import React, { useEffect, Fragment } from 'react'
 
-const MeetingNoteSocket = ({ meetingPartId }) => {
+import { useState } from 'core'
+
+const MeetingNoteSocket = ({ meetingPartId, onChangeSentences }) => {
   const wsEndpoint =
     'ws://db.eachclass.net:8000/streaming/?meeting_part__id=' + meetingPartId
   // eslint-disable-next-line no-undef
@@ -11,7 +14,7 @@ const MeetingNoteSocket = ({ meetingPartId }) => {
   }
   ws.onmessage = evt => {
     const message = JSON.parse(evt.data)
-    console.log(message)
+    onChangeSentences(message)
   }
   useEffect(() => {
     return () => {
@@ -19,9 +22,33 @@ const MeetingNoteSocket = ({ meetingPartId }) => {
       ws.close(1000, 'User chose other part. Change socket channel')
     }
   }, [ws])
-  return <Fragment />
+  return null
 }
 
-export const Part = ({ partId }) => {
-  return <MeetingNoteSocket meetingPartId={partId} />
+export const Part = ({ partId, sentences }) => {
+  const [state, setState] = useState({ sentences, meetingPartId: partId })
+  const onChangeSentences = message => {
+    setState({
+      sentences: [
+        ...sentences,
+        {
+          text_norm: message
+        }
+      ]
+    })
+  }
+
+  return (
+    <Fragment>
+      {state.sentences.length === 0 ? (
+        <span>Chưa có nội dung phiên họp</span>
+      ) : null}
+      {state.sentences.map(({ text_norm }) => text_norm + ' ')}
+      <MeetingNoteSocket
+        sentences={state.sentences}
+        meetingPartId={state.meetingPartId}
+        onChangeSentences={onChangeSentences}
+      />
+    </Fragment>
+  )
 }
