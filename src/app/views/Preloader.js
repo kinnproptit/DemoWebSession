@@ -17,7 +17,6 @@ export const Preloader = ({ children }) => {
   useEffect(() => {
     const fetchData = async () => {
       const sessions = await axios('http://db.eachclass.net:8000/sessions')
-      // const sessions = await axios('https://jsonplaceholder.typicode.com/users')
       const parts = await axios('http://db.eachclass.net:8000/parts')
       setState({ loading: false, sessions: sessions.data, parts: parts.data })
     }

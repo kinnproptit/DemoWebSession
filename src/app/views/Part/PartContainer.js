@@ -1,35 +1,40 @@
-// import React, { useEffect } from 'react'
-// import axios from 'axios'
-// import { withRouter } from 'react-router-dom'
+import React from 'react'
+import styled from 'styled-components'
 
-// import { useState } from 'core'
-// import { LoadingIndicator } from 'ui'
+import { Card } from 'tabler-react'
+import Dropdown from 'react-dropdown'
+import 'react-dropdown/style.css'
 
-// import { Part } from './Part'
+import { Part } from './Part'
 
-// const PartContainer = ({ match }) => {
-//   const [state, setState] = useState({ loading: true, sentences: [] })
-//   const id = match.params.id
+export const PartContainer = ({ options, onSelect, sentences, partId }) => {
+  const props = {
+    options,
+    onSelect,
+    sentences,
+    partId
+  }
 
-//   useEffect(() => {
-//     const fetchData = async () => {
-//       const sentences = await axios(
-//         'http://db.eachclass.net:8000/sentences/?meeting_part__id=' + id
-//       )
-//       setState({ loading: false, sentences: sentences.data })
-//     }
-//     fetchData()
-//   }, [])
+  return (
+    <Card>
+      <Card.Header>
+        <Label>Phiên họp</Label>
+        <Dropdown
+          key={Math.random()}
+          options={options}
+          // eslint-disable-next-line react/jsx-no-bind
+          onChange={onSelect}
+          value={options[0]}
+          placeholder='Select an option'
+        />
+      </Card.Header>
+      <Card.Body>
+        <Part {...props} />
+      </Card.Body>
+    </Card>
+  )
+}
 
-//   if (state.loading) {
-//     return <LoadingIndicator />
-//   }
-
-//   const props = {
-//     sentences: state.sentences
-//   }
-
-//   return <Part {...props} />
-// }
-
-// export default withRouter(PartContainer)
+const Label = styled.span`
+  margin-right: 15px;
+`

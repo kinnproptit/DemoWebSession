@@ -1,3 +1,1 @@
-// import PartContainer from './PartContainer'
-
-// export default PartContainer
+export { PartContainer } from './PartContainer'
