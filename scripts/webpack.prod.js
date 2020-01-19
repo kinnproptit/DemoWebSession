@@ -1,23 +1,21 @@
-const merge = require('webpack-merge')
-// const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const webpack = require('webpack')
 
-const common = require('./webpack.common.js')
+const provisionConfig = require('./webpack.config')
 
-module.exports = merge(common, {
-  mode: 'production'
-  // module: {
-  //   rules: [
-  //     {
-  //       test: /\.s[ac]ss$/i,
-  //       use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
-  //     }
-  //   ]
-  // },
-  // plugins: [
-  //   new MiniCssExtractPlugin({
-  //     filename: '[name].[hash].css',
-  //     chunkFilename: '[id].[hash].css',
-  //     ignoreOrder: false
-  //   })
-  // ]
-})
+module.exports = () => {
+  const outputPath = './build'
+  const mode = 'production'
+
+  const config = provisionConfig({
+    mode,
+    outputPath
+  })
+
+  config.plugins.push(
+    new webpack.DefinePlugin({
+      'process.env.SERVER_URL': JSON.stringify(process.env.SERVER_URL)
+    })
+  )
+
+  return config
+}

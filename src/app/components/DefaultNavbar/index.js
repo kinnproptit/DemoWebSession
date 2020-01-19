@@ -12,8 +12,6 @@ import { NavLink, withRouter } from 'react-router-dom'
 
 import { Site, RouterContextProvider, Grid, List } from 'tabler-react'
 
-import Logo from '../../assets/logo.svg'
-
 const navBarItems = [
   {
     value: 'Home',
@@ -59,7 +57,7 @@ export const DefaultNavbar = ({ children }) => {
       headerProps={{
         href: '/',
         alt: 'Logo',
-        imageURL: 'logo.png'
+        imageURL: 'logo.svg'
         // navItems: (
         //   <Nav.Item type='div' className='d-none d-md-flex'>
         //     <Button

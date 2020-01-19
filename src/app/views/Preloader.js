@@ -1,7 +1,8 @@
 import React, { createContext, useEffect } from 'react'
 import axios from 'axios'
-import { useState } from 'core'
 
+import environments from 'environments'
+import { useState } from 'core'
 import { LoadingIndicator } from 'ui'
 
 export const PreloaderContext = createContext()
@@ -16,8 +17,8 @@ export const Preloader = ({ children }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const sessions = await axios('http://db.eachclass.net:8000/sessions')
-      const parts = await axios('http://db.eachclass.net:8000/parts')
+      const sessions = await axios(`${environments.baseUrl}sessions`)
+      const parts = await axios(`${environments.baseUrl}parts`)
       setState({ loading: false, sessions: sessions.data, parts: parts.data })
     }
     fetchData()

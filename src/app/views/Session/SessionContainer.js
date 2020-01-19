@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import axios from 'axios'
 import { withRouter } from 'react-router-dom'
 
+import environments from 'environments'
 import { useState } from 'core'
 import { LoadingIndicator } from 'ui'
 
@@ -20,11 +21,11 @@ const SessionContainer = ({ match }) => {
   useEffect(() => {
     const fetchData = async () => {
       const parts = await axios(
-        'http://db.eachclass.net:8000/parts/?meeting_session__id=' + id
+        `${environments.baseUrl}parts/?meeting_session__id=` + id
       )
       const partId = state.partId || parts.data[0].id
       const sentences = await axios(
-        'http://db.eachclass.net:8000/sentences/?meeting_part__id=' + partId
+        `${environments.baseUrl}sentences/?meeting_part__id=` + partId
       )
       setState({
         loading: false,
