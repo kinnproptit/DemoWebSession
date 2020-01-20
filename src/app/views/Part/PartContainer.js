@@ -5,7 +5,7 @@ import { Card } from 'tabler-react'
 import Dropdown from 'react-dropdown'
 import 'react-dropdown/style.css'
 
-import { Part } from './Part'
+import { MeetingNoteSocket } from './MeetingNoteSocket'
 
 export const PartContainer = ({ options, onSelect, sentences, partId }) => {
   const props = {
@@ -29,7 +29,7 @@ export const PartContainer = ({ options, onSelect, sentences, partId }) => {
         />
       </Card.Header>
       <Card.Body>
-        <Part {...props} />
+        <MeetingNoteSocket meetingPartId={partId} {...props} />
       </Card.Body>
     </Card>
   )

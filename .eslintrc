@@ -47,6 +47,7 @@
     // "no-underscore-dangle": "error",
     "semi": ["error", "never"],
     "no-extra-semi": "error",
-    "quotes": ["error", "single"]
+    "quotes": ["error", "single"],
+    "react/jsx-no-bind": "off"
   }
 }
