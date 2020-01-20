@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 /* eslint-disable react/jsx-no-bind */
-import React, { Fragment } from 'react'
+import React, { Fragment, useEffect } from 'react'
 
 import environments from 'environments'
 import { useState } from 'core'
@@ -17,10 +17,14 @@ export const Part = ({ sentences, websocket }) => {
     })
   }
 
-  websocket.onmessage = evt => {
-    const message = JSON.parse(evt.data)
-    onChangeSentences(message)
-  }
+  useEffect(() => {
+    // return () => {
+    websocket.onmessage = evt => {
+      const message = JSON.parse(evt.data)
+      onChangeSentences(message)
+    }
+    // }
+  }, [websocket])
 
   return (
     <Fragment>
