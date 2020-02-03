@@ -3,7 +3,7 @@
 import React, { useEffect, Fragment } from 'react'
 import { useSelector } from 'react-redux'
 
-import { Card } from 'tabler-react'
+import { Card, Form } from 'tabler-react'
 
 import { useState } from 'core'
 import environments from 'environments'
@@ -56,15 +56,22 @@ export const Part = ({ sentences, websocket }) => {
         <Card.Body>
           {state.sentences.length === 0 ? (
             <span>Chưa có nội dung phiên họp</span>
-          ) : null}
-          {state.sentences.map(text => text[showText] + ' ')}
+          ) : (
+            <Form>
+              <Form.Textarea rows={state.sentences.length / 5}>
+                {state.sentences.map(text => text[showText] + ' ')}
+              </Form.Textarea>
+            </Form>
+          )}
         </Card.Body>
       </Card>
-      <Card>
-        <Card.Body>
-          {state.runningSentences.map(text => text[showText] + ' ')}
-        </Card.Body>
-      </Card>
+      {state.runningSentences.length !== 0 ? (
+        <Card>
+          <Card.Body>
+            {state.runningSentences.map(text => text[showText] + ' ')}
+          </Card.Body>
+        </Card>
+      ) : null}
     </Fragment>
   )
 }

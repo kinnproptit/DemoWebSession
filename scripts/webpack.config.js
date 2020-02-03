@@ -95,7 +95,7 @@ module.exports = ({ mode, outputPath }) => {
       contentBase: './public',
       overlay: true,
       hot: false,
-      port: 8123,
+      port: 8124,
       quiet: true,
       host: '0.0.0.0',
       disableHostCheck: true,
