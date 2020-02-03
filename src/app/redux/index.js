@@ -7,7 +7,7 @@ import logger from 'redux-logger'
 import rootReducer from './reducers'
 
 const client = axios.create({
-  baseURL: 'http://db.eachclass.net:8000/',
+  baseURL: 'http://localhost:8000/',
   responseType: 'json'
 })
 

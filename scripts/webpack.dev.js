@@ -13,7 +13,8 @@ module.exports = () => {
 
   config.plugins.push(
     new BundleAnalyzerPlugin({
-      openAnalyzer: false // open on :8888
+      openAnalyzer: false, // open on :8888
+      analyzerPort: 8001
     })
   )
 

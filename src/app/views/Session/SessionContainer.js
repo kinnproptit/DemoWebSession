@@ -23,6 +23,7 @@ const SessionContainer = ({ match }) => {
       const parts = await axios(
         `${environments.baseUrl}parts/?meeting_session__id=` + id
       )
+      console.log(parts);
       const partId = state.partId || parts.data[0].id
       const sentences = await axios(
         `${environments.baseUrl}sentences/?meeting_part__id=` + partId
